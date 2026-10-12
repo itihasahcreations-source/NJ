@@ -17,13 +17,19 @@
   body {
     font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 400;
-    background-color: #050507;
+    background-color: #060608;
     color: #edeae2;
     overflow-x: clip;
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  body.theme-white,
+  .theme-white body {
+    background-color: #FAF8F5 !important;
+    color: #1A1A1A !important;
   }
 
   h1, h2, h3, h4, h5, h6 {

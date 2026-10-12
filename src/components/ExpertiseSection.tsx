@@ -244,20 +244,6 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({
       ref={sectionRef}
       className="pt-24 sm:pt-32 md:pt-40 pb-20 sm:pb-32 select-none relative flex flex-col justify-start border-none bg-transparent"
     >
-      {/* Top & Bottom Deep Gradient Seams (Only in Dark Theme, no boundary light in Light Theme) */}
-      {!isWhite && (
-        <>
-          <div 
-            aria-hidden="true" 
-            className="absolute top-0 inset-x-0 h-28 sm:h-36 bg-gradient-to-b from-[#040406] via-[#040406]/70 to-transparent pointer-events-none z-10" 
-          />
-          <div 
-            aria-hidden="true" 
-            className="absolute bottom-0 inset-x-0 h-28 sm:h-36 bg-gradient-to-t from-[#040406] via-[#040406]/70 to-transparent pointer-events-none z-10" 
-          />
-        </>
-      )}
-
       {/* Atmospheric Ambient Glow (Only in Dark Theme) */}
       {!isWhite && (
         <div 

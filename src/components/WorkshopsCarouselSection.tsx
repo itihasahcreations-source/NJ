@@ -41,7 +41,8 @@ const ARTISTS_IMAGES: CarouselCardItem[] = [
 ];
 
 export const WorkshopsCarouselSection: React.FC<WorkshopsCarouselSectionProps> = ({
-  theme = 'dark'
+  theme = 'dark',
+  onOpenInquiry
 }) => {
   const isWhite = theme === 'white';
   const [activeTab, setActiveTab] = useState<TabType>('upcoming');
@@ -217,7 +218,7 @@ export const WorkshopsCarouselSection: React.FC<WorkshopsCarouselSectionProps> =
     <section 
       id="workshops" 
       ref={sectionRef}
-      className="py-20 sm:py-20 md:py-24 select-none relative overflow-hidden bg-transparent"
+      className="py-16 sm:py-24 md:py-32 select-none relative overflow-hidden bg-transparent"
     >
       <style>{`
         .workshops-card-shell {
@@ -293,49 +294,116 @@ export const WorkshopsCarouselSection: React.FC<WorkshopsCarouselSectionProps> =
         }
       `}</style>
 
-      {/* Seamless Transition Seams */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-20 sm:h-28 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/50' : 'from-[#060608] via-[#060608]/50'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-20 sm:h-28 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/50' : 'from-[#060608] via-[#060608]/50'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 relative z-20">
         
         {/* ============================================================== */}
-        {/* 1. TOP-LEFT: FOREGROUND WORKSHOPS TITLE (Z-25)                 */}
-        {/* Carousel left cards start 10% behind this title                */}
+        {/* 1. SECTION TITLE (Centered on mobile, Left on desktop)        */}
         {/* ============================================================== */}
         <div className="relative z-25 pointer-events-none">
           <FadeInUp delay={0.05} yOffset={10}>
             <SectionTitleLockup
               title="WORKSHOPS"
-              align="left"
+              align="mobile-center"
               theme={theme}
             />
           </FadeInUp>
         </div>
 
+        {/* Mobile Centered Tabs: UPCOMING · ARTISTS */}
+        <div className="flex sm:hidden items-center justify-center gap-5 mt-3 mb-4 z-25 relative pointer-events-auto">
+          <button
+            type="button"
+            onClick={() => setActiveTab('upcoming')}
+            className={`font-['Bebas_Neue',_'Montserrat',_sans-serif] text-xl tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer ${
+              activeTab === 'upcoming'
+                ? isWhite ? 'text-black border-b-2 border-black pb-0.5' : 'text-white border-b-2 border-white pb-0.5'
+                : isWhite ? 'text-stone-400 hover:text-stone-700' : 'text-stone-500 hover:text-stone-300'
+            }`}
+          >
+            UPCOMING.
+          </button>
+          <span className={isWhite ? 'text-stone-300 select-none' : 'text-white/20 select-none'}>·</span>
+          <button
+            type="button"
+            onClick={() => setActiveTab('artists')}
+            className={`font-['Bebas_Neue',_'Montserrat',_sans-serif] text-xl tracking-[0.2em] uppercase transition-all duration-300 cursor-pointer ${
+              activeTab === 'artists'
+                ? isWhite ? 'text-black border-b-2 border-black pb-0.5' : 'text-white border-b-2 border-white pb-0.5'
+                : isWhite ? 'text-stone-400 hover:text-stone-700' : 'text-stone-500 hover:text-stone-300'
+            }`}
+          >
+            ARTISTS.
+          </button>
+        </div>
+
         {/* ============================================================== */}
-        {/* 2. 3D FLOW CAROUSEL: Left starts overlapping 10% behind       */}
-        {/* WORKSHOPS, Right expands +30% & overlaps 20% behind ARTISTS   */}
+        {/* MOBILE REDESIGNED CAROUSEL: Crisp, Visible, Native Touch-Swipe */}
         {/* ============================================================== */}
-        <div className="relative w-full h-[clamp(340px,55svh,500px)] mt-4 sm:-mt-10 z-10 flex items-center justify-center pointer-events-auto">
+        <div className="block sm:hidden relative w-full overflow-hidden my-2">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory py-4 px-[12vw] no-scrollbar items-center">
+            {currentItems.map((item, idx) => (
+              <div
+                key={`mobile-${item.id}-${idx}`}
+                onClick={() => onOpenInquiry?.(activeTab === 'upcoming' ? `Upcoming Workshop — ${item.alt}` : `Artist Masterclass — ${item.alt}`)}
+                className={`snap-center shrink-0 w-[74vw] max-w-[285px] aspect-[3/4] relative overflow-hidden cursor-pointer select-none transition-all duration-300 ${
+                  isWhite
+                    ? 'bg-white border border-black/15 shadow-[0_12px_36px_rgba(0,0,0,0.08)]'
+                    : 'bg-stone-950 border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.95)]'
+                }`}
+              >
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover rounded-none brightness-[0.98] contrast-[1.04]"
+                  />
+                )}
+
+                {/* Laser-cut corner markers */}
+                <div className="absolute inset-0 p-3.5 flex flex-col justify-between pointer-events-none">
+                  <div className="w-full flex justify-between">
+                    <span className="w-2 h-2 border-t border-l border-white/30" />
+                    <span className="w-2 h-2 border-t border-r border-white/30" />
+                  </div>
+                  <div className="w-full flex justify-between">
+                    <span className="w-2 h-2 border-b border-l border-white/30" />
+                    <span className="w-2 h-2 border-b border-r border-white/30" />
+                  </div>
+                </div>
+
+                <div className="workshops-card-glare" />
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Swipe to Explore Bar — Crisp, high-contrast, fully visible in both light & dark themes */}
+          <div className="flex items-center justify-center gap-2.5 mt-4 select-none">
+            <span className={`h-px w-8 transition-colors ${isWhite ? 'bg-stone-900' : 'bg-white/50'}`} />
+            <span className={`text-[10px] tracking-[0.28em] uppercase font-['Montserrat',_sans-serif] font-extrabold transition-colors ${
+              isWhite ? 'text-stone-950 font-black' : 'text-white/95 font-bold'
+            }`}>
+              SWIPE TO EXPLORE
+            </span>
+            <span className={`h-px w-8 transition-colors ${isWhite ? 'bg-stone-900' : 'bg-white/50'}`} />
+          </div>
+        </div>
+
+        {/* ============================================================== */}
+        {/* 2. DESKTOP 3D FLOW CAROUSEL (Desktop only — hidden on mobile)  */}
+        {/* ============================================================== */}
+        <div className={`hidden sm:flex relative w-full h-[clamp(340px,55svh,500px)] ${
+          isWhite ? 'mt-4 sm:mt-1' : 'mt-4 sm:-mt-10'
+        } z-10 items-center justify-center pointer-events-auto`}>
           
-          {/* Edge Feather Blending */}
-          <div className={`absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-r ${
-            isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/80' : 'from-[#060608] via-[#060608]/80'
-          } to-transparent transition-colors duration-500`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-l ${
-            isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/80' : 'from-[#060608] via-[#060608]/80'
-          } to-transparent transition-colors duration-500`} />
+          {/* Edge Feather Blending - Removed in white theme & zero blur on mobile */}
+          {!isWhite && (
+            <>
+              <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-[#060608] via-[#060608]/80 to-transparent transition-colors duration-500" />
+              <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-[#060608] via-[#060608]/80 to-transparent transition-colors duration-500" />
+            </>
+          )}
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -346,8 +414,8 @@ export const WorkshopsCarouselSection: React.FC<WorkshopsCarouselSectionProps> =
               transition={{ duration: 0.25 }}
               className="w-full h-full overflow-visible"
               style={{
-                maskImage: 'radial-gradient(ellipse 95% 85% at 50% 50%, black 60%, transparent 100%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 95% 85% at 50% 50%, black 60%, transparent 100%)',
+                maskImage: isWhite ? 'none' : 'radial-gradient(ellipse 95% 85% at 50% 50%, black 60%, transparent 100%)',
+                WebkitMaskImage: isWhite ? 'none' : 'radial-gradient(ellipse 95% 85% at 50% 50%, black 60%, transparent 100%)',
               }}
             >
               <div
@@ -407,10 +475,9 @@ export const WorkshopsCarouselSection: React.FC<WorkshopsCarouselSectionProps> =
         </div>
 
         {/* ============================================================== */}
-        {/* 3. BOTTOM-RIGHT: FOREGROUND UPCOMING. & ARTISTS. (Z-25)        */}
-        {/* Carousel right end overlaps 20% behind this control block      */}
+        {/* 3. DESKTOP BOTTOM-RIGHT: UPCOMING. & ARTISTS. (Desktop only)   */}
         {/* ============================================================== */}
-        <div className="relative z-25 pointer-events-none mt-4 sm:-mt-16 flex items-end justify-end">
+        <div className="hidden sm:flex relative z-25 pointer-events-none mt-4 sm:-mt-16 items-end justify-end">
           <FadeInUp delay={0.1} yOffset={8}>
             <div className="flex flex-col items-end text-right gap-1 pointer-events-auto">
               <button

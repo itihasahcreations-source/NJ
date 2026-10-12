@@ -57,8 +57,8 @@ const VideoRepertoireCard: React.FC<{
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       className={`relative w-64 sm:w-76 md:w-84 aspect-[16/10] overflow-hidden shrink-0 group cursor-pointer outline-none ring-0 transition-all duration-300 will-change-transform ${
         isWhite
-          ? 'border border-black/10 bg-white shadow-[0_15px_40px_rgba(0,0,0,0.08)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.12)] hover:border-black/25'
-          : 'border border-white/10 bg-stone-950 shadow-[0_15px_40px_rgba(0,0,0,0.85)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.98)] hover:border-white/30'
+          ? 'border border-black/10 bg-white shadow-none sm:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-black/25'
+          : 'border border-white/10 bg-stone-950 shadow-none sm:shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:border-white/30'
       }`}
     >
       {/* Background Media */}
@@ -76,10 +76,10 @@ const VideoRepertoireCard: React.FC<{
         />
       )}
 
-      {/* Subtle Specular Glare */}
+      {/* Subtle Specular Glare (Desktop only, zero mobile shadows) */}
       <div 
         aria-hidden="true" 
-        className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none group-hover:opacity-60 transition-opacity" 
+        className="hidden sm:block absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none group-hover:opacity-60 transition-opacity" 
       />
 
       {/* Top Right Corner Arrow Badge */}
@@ -126,22 +126,8 @@ export const DanceFitnessSection: React.FC<DanceFitnessSectionProps> = ({
     <section 
       id="studio" 
       ref={sectionRef}
-      className="py-20 sm:py-24 select-none relative overflow-hidden bg-transparent"
+      className="py-18 sm:py-26 md:py-34 select-none relative overflow-hidden bg-transparent"
     >
-      {/* Seamless Transition Seams */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-28 sm:h-36 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/55' : 'from-[#060608] via-[#060608]/55'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-28 sm:h-36 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/55' : 'from-[#060608] via-[#060608]/55'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-
       <div className="max-w-[1640px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 relative z-20">
         
         {/* Section Header: Monolith CHOREOS (Foreground Z-25) */}
@@ -149,7 +135,7 @@ export const DanceFitnessSection: React.FC<DanceFitnessSectionProps> = ({
           <FadeInUp delay={0.05} yOffset={20}>
             <SectionTitleLockup
               title="CHOREOS"
-              align="left"
+              align="mobile-center"
               theme={theme}
             />
           </FadeInUp>
@@ -157,19 +143,11 @@ export const DanceFitnessSection: React.FC<DanceFitnessSectionProps> = ({
 
       </div>
 
-      {/* Floating 3D Infinite Scrolling Rows Overlapping 10% Behind CHOREOS */}
+      {/* Floating 3D Infinite Scrolling Rows — Crisp, zero edge shadows on laptop or mobile */}
       <motion.div 
         style={{ y: floatingY }}
-        className="relative z-10 mt-4 sm:-mt-10 md:-mt-12 w-full overflow-hidden space-y-6 sm:space-y-5 pt-4"
+        className="relative z-10 mt-3 sm:mt-5 md:mt-6 w-full overflow-hidden space-y-4 sm:space-y-5"
       >
-        {/* Edge Masks for Smooth Merging */}
-        <div className={`absolute left-0 top-0 bottom-0 w-16 sm:w-40 z-20 pointer-events-none bg-gradient-to-r ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/80' : 'from-[#060608] via-[#060608]/80'
-        } to-transparent transition-colors duration-500`} />
-        <div className={`absolute right-0 top-0 bottom-0 w-16 sm:w-40 z-20 pointer-events-none bg-gradient-to-l ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/80' : 'from-[#060608] via-[#060608]/80'
-        } to-transparent transition-colors duration-500`} />
-
         {/* ROW 1: Scrolling RIGHT */}
         <div className="animate-marquee-reverse flex gap-4 shrink-0 px-4">
           {row1Items.concat(row1Items).map((item, idx) => (

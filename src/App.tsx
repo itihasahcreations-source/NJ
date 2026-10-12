@@ -123,24 +123,12 @@ export default function App() {
         : 'bg-[#060608] text-[#edeae2] selection:bg-white selection:text-black'
     }`}>
       
-      {/* Atmospheric Ambient Background */}
+      {/* Single Unified Continuous Background for Entire App */}
       <div 
         aria-hidden="true" 
-        className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none transition-opacity duration-700"
+        className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none transition-colors duration-500"
         style={{
-          background: theme === 'white'
-            ? `
-              radial-gradient(circle at 50% 20%, rgba(230, 224, 214, 0.55) 0%, transparent 60%),
-              radial-gradient(circle at 80% 60%, rgba(225, 218, 206, 0.45) 0%, transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(235, 228, 216, 0.45) 0%, transparent 50%),
-              #FAF8F5
-            `
-            : `
-              radial-gradient(circle at 50% 20%, rgba(25, 25, 32, 0.4) 0%, transparent 60%),
-              radial-gradient(circle at 80% 60%, rgba(18, 18, 24, 0.3) 0%, transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(14, 14, 20, 0.3) 0%, transparent 50%),
-              #040406
-            `
+          backgroundColor: theme === 'white' ? '#FAF8F5' : '#060608'
         }}
       />
 

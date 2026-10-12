@@ -165,26 +165,8 @@ export const SelectedCredits: React.FC<SelectedCreditsProps> = ({ theme = 'dark'
   return (
     <section 
       id="credits"
-      className="py-14 sm:py-20 select-none relative overflow-hidden bg-transparent"
+      className="pt-28 sm:pt-36 md:pt-48 pb-20 sm:pb-32 select-none relative overflow-hidden bg-transparent"
     >
-      {/* Seamless Transition Seams: Merges 3rd section (Projects) into Credits, and Credits into Dance & Fitness */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-28 sm:h-36 pointer-events-none z-10 ${
-          isWhite 
-            ? 'bg-gradient-to-b from-[#FAF8F5] via-[#FAF8F5]/50 to-transparent' 
-            : 'bg-gradient-to-b from-[#060608] via-[#060608]/50 to-transparent'
-        }`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-28 sm:h-36 pointer-events-none z-10 ${
-          isWhite 
-            ? 'bg-gradient-to-t from-[#FAF8F5] via-[#FAF8F5]/50 to-transparent' 
-            : 'bg-gradient-to-t from-[#060608] via-[#060608]/50 to-transparent'
-        }`} 
-      />
-
       {/* Floating Spatial Atmospheric Ambient Lighting */}
       <div 
         aria-hidden="true" 
@@ -211,17 +193,13 @@ export const SelectedCredits: React.FC<SelectedCreditsProps> = ({ theme = 'dark'
         <FadeInUp delay={0.1} yOffset={15}>
           <div className="relative overflow-hidden py-3 flex items-center">
             
-            {/* Seamless Edge Fade Overlays */}
-            <div className={`absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none ${
-              isWhite 
-                ? 'bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/70 to-transparent' 
-                : 'bg-gradient-to-r from-[#060608] via-[#060608]/70 to-transparent'
-            }`} />
-            <div className={`absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none ${
-              isWhite 
-                ? 'bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/70 to-transparent' 
-                : 'bg-gradient-to-l from-[#060608] via-[#060608]/70 to-transparent'
-            }`} />
+            {/* Seamless Edge Fade Overlays - Removed in white theme & zero blur on mobile */}
+            {!isWhite && (
+              <>
+                <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none bg-gradient-to-r from-[#060608] via-[#060608]/70 to-transparent" />
+                <div className="hidden sm:block absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-20 pointer-events-none bg-gradient-to-l from-[#060608] via-[#060608]/70 to-transparent" />
+              </>
+            )}
 
             {/* Seamless 60fps continuous infinite loop */}
             <div className="flex animate-marquee-track whitespace-nowrap will-change-transform items-center">

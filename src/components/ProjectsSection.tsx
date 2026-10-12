@@ -232,7 +232,9 @@ const ParallaxProjectCard: React.FC<{
 const MobileProjectCardsRow: React.FC<{
   panels: EditorialPanel[];
   onCardClick: (panel: EditorialPanel) => void;
-}> = ({ panels, onCardClick }) => {
+  theme?: 'dark' | 'white';
+}> = ({ panels, onCardClick, theme = 'dark' }) => {
+  const isWhite = theme === 'white';
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -248,10 +250,6 @@ const MobileProjectCardsRow: React.FC<{
 
   return (
     <div className="relative w-full block sm:hidden">
-      {/* Edge gradient masks for luxury blur feel */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none bg-gradient-to-r from-[#040406] to-transparent" />
-      <div className="absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none bg-gradient-to-l from-[#040406] to-transparent" />
-
       <div
         ref={containerRef}
         onScroll={handleScroll}
@@ -266,10 +264,16 @@ const MobileProjectCardsRow: React.FC<{
               onClick={() => onCardClick(panel)}
               className={`snap-center shrink-0 ${
                 isDestination ? 'w-[68vw] max-w-[270px] aspect-[9/16]' : 'w-[74vw] max-w-[290px] aspect-[3/4]'
-              } relative overflow-hidden bg-stone-950 cursor-pointer select-none transition-all duration-500 will-change-transform ${
+              } relative overflow-hidden ${
+                isWhite ? 'bg-white' : 'bg-stone-950'
+              } cursor-pointer select-none transition-all duration-500 will-change-transform ${
                 isActive
-                  ? 'scale-[1.08] z-20 border border-white/60 shadow-[0_25px_60px_rgba(0,0,0,0.98),0_0_24px_rgba(255,255,255,0.22)] opacity-100 filter-none'
-                  : 'scale-[0.92] z-10 border border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.8)] opacity-55 blur-[1.2px]'
+                  ? isWhite
+                    ? 'scale-[1.06] z-20 border border-black/40 shadow-[0_20px_45px_rgba(0,0,0,0.14)] opacity-100 filter-none'
+                    : 'scale-[1.08] z-20 border border-white/60 shadow-[0_25px_60px_rgba(0,0,0,0.98),0_0_24px_rgba(255,255,255,0.22)] opacity-100 filter-none'
+                  : isWhite
+                    ? 'scale-[0.95] z-10 border border-black/10 shadow-[0_8px_20px_rgba(0,0,0,0.06)] opacity-90 filter-none'
+                    : 'scale-[0.94] z-10 border border-white/20 shadow-[0_12px_30px_rgba(0,0,0,0.8)] opacity-90 filter-none'
               }`}
             >
               {panel.image ? (
@@ -283,14 +287,16 @@ const MobileProjectCardsRow: React.FC<{
                   } transition-all duration-700 ease-out`}
                 />
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-between p-6 bg-stone-900/40 border border-white/10">
+                <div className={`w-full h-full flex flex-col items-center justify-between p-6 ${
+                  isWhite ? 'bg-black/[0.02] border border-black/10' : 'bg-stone-900/40 border border-white/10'
+                }`}>
                   <div className="w-full flex justify-between">
-                    <span className="w-2.5 h-2.5 border-t border-l border-white/30" />
-                    <span className="w-2.5 h-2.5 border-t border-r border-white/30" />
+                    <span className={`w-2.5 h-2.5 border-t border-l ${isWhite ? 'border-black/30' : 'border-white/30'}`} />
+                    <span className={`w-2.5 h-2.5 border-t border-r ${isWhite ? 'border-black/30' : 'border-white/30'}`} />
                   </div>
                   <div className="w-full flex justify-between">
-                    <span className="w-2.5 h-2.5 border-b border-l border-white/30" />
-                    <span className="w-2.5 h-2.5 border-b border-r border-white/30" />
+                    <span className={`w-2.5 h-2.5 border-b border-l ${isWhite ? 'border-black/30' : 'border-white/30'}`} />
+                    <span className={`w-2.5 h-2.5 border-b border-r ${isWhite ? 'border-black/30' : 'border-white/30'}`} />
                   </div>
                 </div>
               )}
@@ -311,6 +317,17 @@ const MobileProjectCardsRow: React.FC<{
             </div>
           );
         })}
+      </div>
+
+      {/* Mobile Swipe to Explore Bar */}
+      <div className="flex items-center justify-center gap-2.5 mt-2 pb-2 select-none">
+        <span className={`h-px w-8 transition-colors ${isWhite ? 'bg-stone-900' : 'bg-white/50'}`} />
+        <span className={`text-[10px] tracking-[0.28em] uppercase font-['Montserrat',_sans-serif] font-extrabold transition-colors ${
+          isWhite ? 'text-stone-950 font-black' : 'text-white/95 font-bold'
+        }`}>
+          SWIPE TO EXPLORE
+        </span>
+        <span className={`h-px w-8 transition-colors ${isWhite ? 'bg-stone-900' : 'bg-white/50'}`} />
       </div>
     </div>
   );
@@ -376,22 +393,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   return (
     <section 
       id="weddings-gallery"
-      className="py-20 sm:py-24 md:py-28 select-none relative overflow-hidden bg-transparent"
+      className="pt-32 sm:pt-44 md:pt-56 pb-20 sm:pb-32 select-none relative overflow-hidden bg-transparent"
     >
-      {/* Top & Bottom Deep Gradient Seams */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-32 sm:h-44 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/70' : 'from-[#040406] via-[#040406]/70'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-32 sm:h-44 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/70' : 'from-[#040406] via-[#040406]/70'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-
       {/* Ambient Lighting */}
       <div 
         aria-hidden="true" 
@@ -436,6 +439,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               <MobileProjectCardsRow
                 panels={cat.panels}
                 onCardClick={handleCardClick}
+                theme={theme}
               />
 
               {/* Desktop / Tablet Collage Grid (>= sm) with Rich 3D Parallax */}

@@ -47,22 +47,8 @@ export const RentStudioSection: React.FC<RentStudioSectionProps> = ({ theme = 'd
     <section 
       id="rent-studio" 
       ref={sectionRef}
-      className="py-16 sm:py-24 md:py-28 select-none relative overflow-hidden bg-transparent"
+      className="py-18 sm:py-26 md:py-34 select-none relative overflow-hidden bg-transparent"
     >
-      {/* Top & Bottom Ambient Seams */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5]' : 'from-[#060608]'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5]' : 'from-[#060608]'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-
       {/* Atmospheric Soft Light Orb */}
       <div 
         aria-hidden="true" 
@@ -115,7 +101,12 @@ export const RentStudioSection: React.FC<RentStudioSectionProps> = ({ theme = 'd
                 target="_blank"
                 rel="noreferrer"
                 title="Location"
-                className={`relative w-[68vw] sm:w-[56vw] max-w-[760px] aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden transition-all duration-700 block group/canvas ${
+                onClick={(e) => {
+                  if (typeof window !== 'undefined' && window.innerWidth < 640) {
+                    e.preventDefault();
+                  }
+                }}
+                className={`relative w-[84vw] sm:w-[56vw] max-w-[760px] aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden transition-all duration-700 block group/canvas cursor-default sm:cursor-pointer ${
                   isWhite
                     ? 'border border-black/10 bg-white/90 shadow-[0_30px_70px_rgba(0,0,0,0.09)] group-hover:border-black/30'
                     : 'border border-white/10 bg-stone-950/80 shadow-[0_30px_80px_rgba(0,0,0,0.95)] group-hover:border-white/30'
@@ -134,9 +125,9 @@ export const RentStudioSection: React.FC<RentStudioSectionProps> = ({ theme = 'd
                   />
                 )}
 
-                {/* Simple Rent Studio Heading popping from image when hovered over (Pure text, no pill boundary) */}
+                {/* Simple Rent Studio Heading: Always visible on mobile, popping on hover on desktop */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                  <div className="opacity-0 group-hover/canvas:opacity-100 scale-90 group-hover/canvas:scale-100 transition-all duration-300 ease-out select-none">
+                  <div className="opacity-100 sm:opacity-0 sm:group-hover/canvas:opacity-100 scale-100 sm:scale-90 sm:group-hover/canvas:scale-100 transition-all duration-300 ease-out select-none">
                     <span className="font-['Bebas_Neue',_sans-serif] text-2xl sm:text-3xl md:text-4xl tracking-[0.25em] uppercase font-bold text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] drop-shadow-[0_1px_4px_rgba(0,0,0,1)]">
                       RENT STUDIO
                     </span>
@@ -166,13 +157,13 @@ export const RentStudioSection: React.FC<RentStudioSectionProps> = ({ theme = 'd
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.06] to-transparent opacity-0 group-hover/canvas:opacity-100 transition-opacity duration-700 pointer-events-none" />
               </a>
 
-              {/* OVERLAPPING FLOATING LOCATION PORTAL (Pure Iconography & Live Beacon) */}
+              {/* OVERLAPPING FLOATING LOCATION PORTAL (Desktop only — hidden on mobile) */}
               <a
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noreferrer"
                 title="Google Maps Coordinates"
-                className={`absolute -bottom-6 -right-2 sm:-bottom-8 sm:right-6 md:right-12 w-[24vw] min-w-[110px] max-w-[210px] aspect-square rounded-2xl overflow-hidden backdrop-blur-2xl transition-all duration-500 flex flex-col items-center justify-center gap-3.5 z-30 group/portal cursor-pointer ${
+                className={`hidden sm:flex absolute -bottom-6 -right-2 sm:-bottom-8 sm:right-6 md:right-12 w-[24vw] min-w-[110px] max-w-[210px] aspect-square rounded-2xl overflow-hidden backdrop-blur-2xl transition-all duration-500 flex-col items-center justify-center gap-3.5 z-30 group/portal cursor-pointer ${
                   isWhite
                     ? 'border border-black/15 bg-white/85 shadow-[0_20px_50px_rgba(0,0,0,0.12)] hover:border-black/40 hover:bg-white hover:scale-105'
                     : 'border border-white/20 bg-black/70 shadow-[0_25px_60px_rgba(0,0,0,0.98)] hover:border-white/50 hover:bg-black/90 hover:scale-105'

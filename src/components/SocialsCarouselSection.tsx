@@ -38,22 +38,8 @@ export const SocialsCarouselSection: React.FC<SocialsCarouselSectionProps> = ({ 
   return (
     <section 
       id="socials"
-      className="py-20 sm:py-24 md:py-28 select-none relative overflow-hidden flex flex-col items-center justify-center bg-transparent"
+      className="py-20 sm:py-28 md:py-36 select-none relative overflow-hidden flex flex-col items-center justify-center bg-transparent"
     >
-      {/* Top & Bottom Seamless Gradient Seams */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-24 sm:h-36 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/85' : 'from-[#040406] via-[#040406]/85'
-        } to-transparent pointer-events-none z-20 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-24 sm:h-36 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/85' : 'from-[#040406] via-[#040406]/85'
-        } to-transparent pointer-events-none z-20 transition-colors duration-500`} 
-      />
-
       {/* Atmospheric Ambient Glow */}
       <div 
         aria-hidden="true" 
@@ -76,17 +62,15 @@ export const SocialsCarouselSection: React.FC<SocialsCarouselSectionProps> = ({ 
           className="absolute inset-x-[-8%] sm:inset-x-[-12%] top-[65%] -translate-y-1/2 z-10 overflow-hidden py-4 pointer-events-auto"
           style={{
             transform: 'translateY(-20%) rotate(-6.5deg) scale(1.06)',
-            maskImage: 'radial-gradient(ellipse 90% 75% at 50% 50%, black 50%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 90% 75% at 50% 50%, black 50%, transparent 100%)',
           }}
         >
-          {/* Soft Feather Gradient Overlays on Left & Right */}
-          <div className={`absolute left-0 top-0 bottom-0 w-32 sm:w-56 z-30 pointer-events-none bg-gradient-to-r ${
-            isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/90' : 'from-[#040406] via-[#040406]/90'
-          } to-transparent transition-colors duration-500`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-32 sm:w-56 z-30 pointer-events-none bg-gradient-to-l ${
-            isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/90' : 'from-[#040406] via-[#040406]/90'
-          } to-transparent transition-colors duration-500`} />
+          {/* Feather Gradient Overlays on Left & Right - Completely removed in white theme & zero blur on mobile */}
+          {!isWhite && (
+            <>
+              <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-32 sm:w-56 z-30 pointer-events-none bg-gradient-to-r from-[#040406] via-[#040406]/90 to-transparent transition-colors duration-500" />
+              <div className="hidden sm:block absolute right-0 top-0 bottom-0 w-32 sm:w-56 z-30 pointer-events-none bg-gradient-to-l from-[#040406] via-[#040406]/90 to-transparent transition-colors duration-500" />
+            </>
+          )}
 
           {/* Marquee Track Moving Diagonally Behind Title — Continuous, non-pausable, non-clickable */}
           <div className="flex items-center gap-4 sm:gap-6 md:gap-7 animate-marquee w-max select-none pointer-events-none px-6">
@@ -132,6 +116,8 @@ export const SocialsCarouselSection: React.FC<SocialsCarouselSectionProps> = ({ 
 
         {/* ============================================================== */}
         {/* FOREGROUND TITLE: COMMUNITY (Shifted 10% downwards)            */}
+        {/* Requirement: In light theme, heading white, logo black, and   */}
+        {/* subtitle ("JOIN THE") white in all versions                    */}
         {/* ============================================================== */}
         <div className="relative z-25 pointer-events-none px-4 text-center transform translate-y-3 sm:translate-y-5">
           <FadeInUp delay={0.05} yOffset={8}>
@@ -140,7 +126,10 @@ export const SocialsCarouselSection: React.FC<SocialsCarouselSectionProps> = ({ 
               title="COMMUNITY"
               align="center"
               theme={theme}
-              className={isWhite ? 'drop-shadow-[0_6px_25px_rgba(0,0,0,0.08)]' : 'drop-shadow-[0_10px_35px_rgba(0,0,0,0.98)]'}
+              titleColor={isWhite ? 'text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.95)]' : undefined}
+              subtitleColor={isWhite ? 'text-white/95 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]' : undefined}
+              logoColor="black"
+              className="drop-shadow-[0_12px_36px_rgba(0,0,0,0.85)]"
             />
           </FadeInUp>
         </div>

@@ -59,20 +59,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       id="contact" 
       className="py-16 sm:py-24 select-none relative overflow-hidden flex flex-col justify-between bg-transparent"
     >
-      {/* Seamless Transition Seams: Merges Community into Contact, and Contact into Footer */}
-      <div 
-        aria-hidden="true" 
-        className={`absolute top-0 inset-x-0 h-32 sm:h-40 bg-gradient-to-b ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/65' : 'from-[#060608] via-[#060608]/55'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-      <div 
-        aria-hidden="true" 
-        className={`absolute bottom-0 inset-x-0 h-28 sm:h-36 bg-gradient-to-t ${
-          isWhite ? 'from-[#FAF8F5] via-[#FAF8F5]/70' : 'from-[#060608] via-[#060608]/60'
-        } to-transparent pointer-events-none z-10 transition-colors duration-500`} 
-      />
-
       {/* Warm Ambient Atmospheric Aura Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <AnimatePresence mode="wait">

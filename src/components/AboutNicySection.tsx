@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // 8 Active Class Slides
 // WACKING is active with /classes/8.jpg
@@ -202,13 +201,13 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
           const offsetFromCenter = offset;
           const normDist = offsetFromCenter / (containerWidth * 0.44);
           
-          // Original cylindrical amphitheater curve:
-          const angleY = Math.max(-36, Math.min(36, -normDist * 28));
+          // Refined 3D amphitheater cylindrical curve with center card prominent:
+          const angleY = Math.max(-32, Math.min(32, -normDist * 24));
           const absDist = Math.abs(normDist);
-          const scale = 0.88 + Math.min(0.24, Math.pow(absDist, 1.4) * 0.20);
-          const translateZ = Math.min(60, (Math.pow(absDist, 1.6) * 120) - 75);
-          const translateY = Math.min(18, Math.pow(absDist, 2) * 8);
-          const opacity = absDist > 1.6 ? Math.max(0, 1 - (absDist - 1.6) * 3) : 1;
+          const scale = Math.max(0.84, 1.03 - absDist * 0.12);
+          const translateZ = Math.max(-120, -Math.pow(absDist, 1.3) * 65);
+          const translateY = Math.min(16, Math.pow(absDist, 1.8) * 6);
+          const opacity = absDist > 1.8 ? Math.max(0, 1 - (absDist - 1.8) * 3) : 1;
 
           cardEl.style.width = `${cardWidth}px`;
           cardEl.style.transform = `translate3d(${currentPos - cardWidth / 2}px, ${translateY}px, ${translateZ}px) rotateY(${angleY}deg) scale(${scale})`;
@@ -269,18 +268,6 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
     } catch {}
   };
 
-  // Step Left / Right Chevrons
-  const handleStep = useCallback((direction: -1 | 1) => {
-    const container = stageRef.current;
-    if (!container) return;
-    const isMobile = container.clientWidth < 768;
-    const cardWidth = isMobile 
-      ? Math.max(160, container.clientWidth * 0.44) 
-      : Math.min(320, Math.max(220, container.clientWidth * 0.22));
-    const cardStride = cardWidth + (isMobile ? 18 : 28);
-    targetOffset.current += -direction * cardStride;
-  }, []);
-
   // Clicking an individual card: open schedule if user was not dragging
   const handleCardClick = () => {
     if (hasDragged.current) return;
@@ -320,15 +307,15 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
       <style>{`
         .about-nicy-section {
           --white: #FFFFFF;
-          --gallery-bg: #060608;
           --bronze-accent: #C5A059;
 
           position: relative;
           width: 100%;
-          min-height: 100svh;
+          min-height: auto;
           overflow: hidden;
-          background-color: var(--gallery-bg);
-          color: var(--white);
+          background: transparent !important;
+          background-color: transparent !important;
+          color: ${isWhite ? '#141312' : 'var(--white)'};
           font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 400;
           box-sizing: border-box;
@@ -338,53 +325,14 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-        }
-
-        .about-nicy-top-seam {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: clamp(50px, 8vh, 100px);
-          background: ${isWhite 
-            ? 'transparent' 
-            : 'linear-gradient(to bottom, #060608 0%, rgba(6, 6, 8, 0.45) 50%, transparent 100%)'};
-          pointer-events: none;
-          z-index: 12;
-        }
-
-        .about-nicy-bottom-seam {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: clamp(70px, 12vh, 160px);
-          background: ${isWhite 
-            ? 'transparent' 
-            : 'linear-gradient(to top, #060608 0%, rgba(6, 6, 8, 0.5) 45%, transparent 100%)'};
-          pointer-events: none;
-          z-index: 12;
-        }
-
-        .about-nicy-ambient-canvas {
-          position: absolute;
-          inset: 0;
-          background: ${isWhite
-            ? `radial-gradient(circle at 35% 65%, rgba(197, 160, 89, 0.08) 0%, transparent 55%),
-               radial-gradient(circle at 78% 22%, rgba(225, 215, 195, 0.25) 0%, transparent 50%),
-               linear-gradient(180deg, #FAF8F5 0%, #F5F1E8 50%, #FAF8F5 100%)`
-            : `radial-gradient(circle at 35% 65%, rgba(197, 160, 89, 0.05) 0%, transparent 55%),
-               radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-               linear-gradient(180deg, #060608 0%, #09090d 50%, #060608 100%)`};
-          z-index: 1;
-          pointer-events: none;
+          padding: clamp(140px, 18vh, 230px) 0 clamp(80px, 10vw, 130px);
         }
 
         .about-nicy-3d-stage {
           position: relative;
-          margin-top: clamp(140px, 18svh, 200px);
+          margin-top: clamp(20px, 3vh, 36px);
           width: 100%;
-          height: clamp(310px, 47svh, 450px);
+          height: clamp(330px, 48svh, 460px);
           z-index: 3;
           perspective: 1200px;
           perspective-origin: 50% 50%;
@@ -466,11 +414,8 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
 
         /* MONUMENTAL CENTER TOP PLACEMENT FOR CLASSES TITLE (Clickable Trigger) */
         .about-nicy-hairline-lockup {
-          position: absolute;
-          top: clamp(60px, 8svh, 95px);
-          left: 0;
-          right: 0;
-          z-index: 10;
+          position: relative;
+          z-index: 25;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -478,6 +423,7 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
           text-align: center;
           opacity: 0;
           transform: translateY(0px);
+          margin-bottom: clamp(28px, 4vh, 48px);
           transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -533,16 +479,23 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
         }
 
         @media (max-width: 767px) {
+          .about-nicy-section {
+            min-height: auto !important;
+            padding: 120px 0 60px !important;
+          }
           .about-nicy-3d-stage {
-            margin-top: clamp(120px, 16svh, 160px);
+            margin-top: 14px !important;
+            height: 310px !important;
           }
           .about-nicy-hairline-lockup {
-            top: clamp(45px, 6svh, 70px);
+            position: relative !important;
+            margin-bottom: 12px !important;
+            z-index: 25 !important;
           }
           .about-nicy-monolith-word {
-            font-size: clamp(38px, 9.5vw, 54px);
+            font-size: clamp(40px, 10vw, 54px) !important;
             letter-spacing: 0.06em;
-            transform: scaleY(1.18);
+            transform: scaleY(1.2);
           }
           .about-nicy-signature-logo {
             width: 88%;
@@ -555,13 +508,6 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
           transform: translateY(0);
         }
       `}</style>
-
-      {/* Top & Bottom Seams */}
-      <div className="about-nicy-top-seam" aria-hidden="true" />
-      <div className="about-nicy-bottom-seam" aria-hidden="true" />
-
-      {/* Ambient Canvas */}
-      <div className="about-nicy-ambient-canvas" aria-hidden="true" />
 
       {/* Monumental CLASSES Lockup with Laser-cut signature logo overlay */}
       <motion.div 
@@ -621,33 +567,39 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
                   />
                 ) : (
                   /* Empty Architectural Panel for Tollywood & Bollywood */
-                  <div className="w-full h-full flex flex-col items-center justify-between p-6 bg-white/[0.015] border border-white/[0.08] relative select-none">
+                  <div className={`w-full h-full flex flex-col items-center justify-between p-6 ${
+                    isWhite 
+                      ? 'bg-black/[0.02] border border-black/10 text-stone-700' 
+                      : 'bg-white/[0.015] border border-white/[0.08] text-white/60'
+                  } relative select-none`}>
                     <div className="w-full flex justify-between">
-                      <span className="w-2.5 h-2.5 border-t border-l border-white/25" />
-                      <span className="w-2.5 h-2.5 border-t border-r border-white/25" />
+                      <span className={`w-2.5 h-2.5 border-t border-l ${isWhite ? 'border-black/25' : 'border-white/25'}`} />
+                      <span className={`w-2.5 h-2.5 border-t border-r ${isWhite ? 'border-black/25' : 'border-white/25'}`} />
                     </div>
 
-                    <div className="flex flex-col items-center justify-center text-center my-auto opacity-45">
-                      <div className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center mb-2.5 text-white/50">
+                    <div className="flex flex-col items-center justify-center text-center my-auto opacity-50">
+                      <div className={`w-7 h-7 rounded-full border ${isWhite ? 'border-black/20 text-black/60' : 'border-white/20 text-white/50'} flex items-center justify-center mb-2.5`}>
                         <span className="text-[11px] font-mono leading-none">+</span>
                       </div>
-                      <span className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono text-white/60 font-semibold">
+                      <span className={`text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono font-semibold ${
+                        isWhite ? 'text-black/70' : 'text-white/60'
+                      }`}>
                         STUDIO LAB
                       </span>
                     </div>
 
                     <div className="w-full flex justify-between">
-                      <span className="w-2.5 h-2.5 border-b border-l border-white/25" />
-                      <span className="w-2.5 h-2.5 border-b border-r border-white/25" />
+                      <span className={`w-2.5 h-2.5 border-b border-l ${isWhite ? 'border-black/25' : 'border-white/25'}`} />
+                      <span className={`w-2.5 h-2.5 border-b border-r ${isWhite ? 'border-black/25' : 'border-white/25'}`} />
                     </div>
                   </div>
                 )}
 
                 {/* Subtle aesthetic laser-cut corner markers */}
-                <div className="absolute top-3 left-3 w-2 h-2 border-t border-l border-white/20 pointer-events-none" />
-                <div className="absolute top-3 right-3 w-2 h-2 border-t border-r border-white/20 pointer-events-none" />
-                <div className="absolute bottom-3 left-3 w-2 h-2 border-b border-l border-white/20 pointer-events-none" />
-                <div className="absolute bottom-3 right-3 w-2 h-2 border-b border-r border-white/20 pointer-events-none" />
+                <div className={`absolute top-3 left-3 w-2 h-2 border-t border-l pointer-events-none ${isWhite ? 'border-black/20' : 'border-white/20'}`} />
+                <div className={`absolute top-3 right-3 w-2 h-2 border-t border-r pointer-events-none ${isWhite ? 'border-black/20' : 'border-white/20'}`} />
+                <div className={`absolute bottom-3 left-3 w-2 h-2 border-b border-l pointer-events-none ${isWhite ? 'border-black/20' : 'border-white/20'}`} />
+                <div className={`absolute bottom-3 right-3 w-2 h-2 border-b border-r pointer-events-none ${isWhite ? 'border-black/20' : 'border-white/20'}`} />
                 
                 <div className="about-nicy-card-glare" />
               </div>
@@ -658,47 +610,16 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
             </div>
           ))}
         </div>
-
-        {/* Minimal Luxury Navigation Chevrons on Carousel Sides */}
-        <div className="absolute inset-y-0 left-2 sm:left-6 flex items-center z-30 pointer-events-none">
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); handleStep(-1); }}
-            aria-label="Previous class"
-            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-300 pointer-events-auto backdrop-blur-md cursor-pointer border ${
-              isWhite
-                ? 'bg-white/80 text-black border-black/10 hover:bg-white hover:border-black/30 shadow-sm'
-                : 'bg-black/60 text-white/90 border-white/15 hover:bg-white/10 hover:border-white/40 hover:text-white shadow-lg'
-            }`}
-          >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 -translate-x-[1px]" />
-          </button>
-        </div>
-
-        <div className="absolute inset-y-0 right-2 sm:right-6 flex items-center z-30 pointer-events-none">
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); handleStep(1); }}
-            aria-label="Next class"
-            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-300 pointer-events-auto backdrop-blur-md cursor-pointer border ${
-              isWhite
-                ? 'bg-white/80 text-black border-black/10 hover:bg-white hover:border-black/30 shadow-sm'
-                : 'bg-black/60 text-white/90 border-white/15 hover:bg-white/10 hover:border-white/40 hover:text-white shadow-lg'
-            }`}
-          >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 translate-x-[1px]" />
-          </button>
-        </div>
       </div>
 
       {/* ============================================================== */}
-      {/* MINIMAL SCHEDULE TRIGGER: Pure text and arrow                  */}
+      {/* MINIMAL SCHEDULE TRIGGER: Pure text without arrows             */}
       {/* ============================================================== */}
-      <div className="flex justify-center mt-5 sm:mt-7 z-25 relative">
+      <div className="flex justify-center mt-6 sm:mt-9 pb-4 sm:pb-8 z-25 relative">
         <button
           type="button"
           onClick={() => setIsScheduleOpen((prev) => !prev)}
-          className={`group inline-flex items-center gap-2 cursor-pointer transition-opacity duration-300 hover:opacity-100 ${
+          className={`group inline-flex items-center cursor-pointer transition-opacity duration-300 hover:opacity-100 ${
             isWhite
               ? 'text-[#141312]/80 hover:text-black'
               : 'text-[#E8E8E3]/80 hover:text-white'
@@ -708,9 +629,6 @@ export const AboutNicySection: React.FC<AboutNicySectionProps> = ({ theme = 'dar
         >
           <span className="font-['Bebas_Neue',_'Montserrat',_sans-serif] tracking-[0.22em] text-sm sm:text-base md:text-lg uppercase font-bold">
             {isScheduleOpen ? 'HIDE SCHEDULE' : 'WEEKLY SCHEDULE'}
-          </span>
-          <span className={`text-[10px] sm:text-xs transition-transform duration-300 select-none ${isScheduleOpen ? 'rotate-180' : ''}`}>
-            ▼
           </span>
         </button>
       </div>
