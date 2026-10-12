@@ -1,0 +1,43 @@
+// Centralized Image Asset Hub (Decoupled from AI images)
+export const ASSETS = {
+  artYakushevPortrait: '',
+  darkContemporary: '',
+  royalPalaceDance: '',
+  jubileeSanctuary: '',
+  internationalMudra: '',
+  
+  weddingSangeet: '',
+  workshopGarba: '',
+  yogaInversion: '',
+  classicalContemporary: '',
+  redSolo: '',
+  lumoraTroupe: '',
+  movementEditorial: '',
+  palaceBallroom: '',
+  mobilityLab: '',
+  privateAtelier: '',
+  sanctuaryCohort: '',
+  studioRehearsal: '',
+  surgeDancer: '',
+};
+
+export const NUMBERED_IMAGE_MAP: Record<number, { key: keyof typeof ASSETS; fileName: string; label: string }> = {
+  1: { key: 'weddingSangeet', fileName: '1.png', label: 'Bollywood Cinema & Royal Sangeet' },
+  2: { key: 'darkContemporary', fileName: '2.png', label: 'Contemporary Dance & Suspension' },
+  3: { key: 'movementEditorial', fileName: '3.png', label: 'Hip Hop & Street Movement' },
+  4: { key: 'jubileeSanctuary', fileName: '4.png', label: 'Zumba Conditioning & Fitness' },
+  5: { key: 'workshopGarba', fileName: '5.png', label: 'Arena Garba & Youth Workshop' },
+  6: { key: 'sanctuaryCohort', fileName: '6.png', label: 'Ladies Special Atelier' },
+  7: { key: 'yogaInversion', fileName: '7.png', label: 'Acro Yoga & Inversions' },
+  8: { key: 'royalPalaceDance', fileName: '8.png', label: 'Royal Palace Sangeet Staging' },
+  9: { key: 'redSolo', fileName: '9.png', label: 'Theatrical Solo Dance Motion' },
+  10: { key: 'internationalMudra', fileName: '10.png', label: 'Mudra & Classical Fusion' },
+  11: { key: 'mobilityLab', fileName: '11.png', label: 'Sprung Floor Mobility Lab' },
+  12: { key: 'privateAtelier', fileName: '12.png', label: 'Private Atelier Residency' },
+  13: { key: 'classicalContemporary', fileName: '13.png', label: 'Classical Contemporary Staging' },
+  14: { key: 'lumoraTroupe', fileName: '14.png', label: 'Duet & Ensemble Troupe' },
+  15: { key: 'surgeDancer', fileName: '15.png', label: 'Kinetic Camera Movement' },
+  16: { key: 'studioRehearsal', fileName: '16.png', label: 'Studio Rehearsal Backstage' },
+  17: { key: 'palaceBallroom', fileName: '17.png', label: 'Imperial Palace Ballroom' },
+  18: { key: 'artYakushevPortrait', fileName: '18.png', label: 'Editorial Dance Portrait' },
+};

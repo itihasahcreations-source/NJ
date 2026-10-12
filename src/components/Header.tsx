@@ -1,0 +1,116 @@
+import React, { useState } from 'react';
+import { Magnetic } from './Magnetic';
+
+export type PageRoute = 'dance-fitness' | 'wedding-fiestas' | 'portfolio';
+
+interface HeaderProps {
+  theme?: 'dark' | 'white';
+  activePage: PageRoute;
+  onSelectPage: (page: PageRoute) => void;
+  onOpenInquiry?: (topic?: string) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  theme = 'dark',
+  activePage,
+  onSelectPage,
+}) => {
+  const isWhite = theme === 'white';
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+
+  // All 3 Menu Options with both compact code (DF / WF / P) and full names
+  const marqueeItems = [
+    { id: 'dance-fitness' as PageRoute, short: 'DF', label: 'DANCE & FITNESS' },
+    { id: 'wedding-fiestas' as PageRoute, short: 'WF', label: 'WEDDING FIESTAS' },
+    { id: 'portfolio' as PageRoute, short: 'P', label: 'PORTFOLIO' },
+    { id: 'dance-fitness' as PageRoute, short: 'DF', label: 'DANCE & FITNESS' },
+    { id: 'wedding-fiestas' as PageRoute, short: 'WF', label: 'WEDDING FIESTAS' },
+    { id: 'portfolio' as PageRoute, short: 'P', label: 'PORTFOLIO' },
+    { id: 'dance-fitness' as PageRoute, short: 'DF', label: 'DANCE & FITNESS' },
+    { id: 'wedding-fiestas' as PageRoute, short: 'WF', label: 'WEDDING FIESTAS' },
+    { id: 'portfolio' as PageRoute, short: 'P', label: 'PORTFOLIO' },
+    { id: 'dance-fitness' as PageRoute, short: 'DF', label: 'DANCE & FITNESS' },
+    { id: 'wedding-fiestas' as PageRoute, short: 'WF', label: 'WEDDING FIESTAS' },
+    { id: 'portfolio' as PageRoute, short: 'P', label: 'PORTFOLIO' },
+  ];
+
+  const handleSelect = (pageId: PageRoute) => {
+    onSelectPage(pageId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 py-2.5 sm:py-3.5 pointer-events-none border-none transition-all duration-300">
+      <div className="max-w-[1720px] mx-auto px-4 flex items-center justify-center relative">
+          
+        {/* ============================================================== */}
+        {/* ULTRA-SLEEK AESTHETIC TRANSPARENT FLOATING PILL                 */}
+        {/* Stable sizing, zero glitch, smooth per-word expansion on hover  */}
+        {/* ============================================================== */}
+        <div className="pointer-events-auto z-30 flex items-center justify-center">
+          <Magnetic strength={0.15}>
+            <div 
+              className={`relative overflow-hidden rounded-full px-3 sm:px-4 h-7 sm:h-8 w-52 sm:w-64 md:w-72 flex items-center transition-all duration-300 ease-out cursor-pointer backdrop-blur-md ${
+                isWhite
+                  ? 'border border-stone-300/80 bg-white/75 hover:bg-white/90 shadow-[0_6px_25px_rgba(0,0,0,0.08)]'
+                  : 'border border-white/10 bg-black/35 hover:bg-black/55 shadow-[0_6px_25px_rgba(0,0,0,0.6)]'
+              }`}
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%)',
+              }}
+            >
+              
+              {/* Subtle edge fades for seamless blending */}
+              <div className={`absolute left-0 top-0 bottom-0 w-4 z-20 pointer-events-none ${
+                isWhite ? 'bg-gradient-to-r from-white/70 to-transparent' : 'bg-gradient-to-r from-black/50 to-transparent'
+              }`} />
+              <div className={`absolute right-0 top-0 bottom-0 w-4 z-20 pointer-events-none ${
+                isWhite ? 'bg-gradient-to-l from-white/70 to-transparent' : 'bg-gradient-to-l from-black/50 to-transparent'
+              }`} />
+
+              {/* Automatic marquee track with smooth hover pause */}
+              <div className="flex items-center gap-3 sm:gap-4 animate-marquee w-max hover:[animation-play-state:paused] whitespace-nowrap">
+                {marqueeItems.map((item, idx) => {
+                  const isActive = activePage === item.id;
+                  const isItemHovered = hoveredIdx === idx;
+
+                  return (
+                    <button
+                      key={`menu-${item.id}-${idx}`}
+                      onClick={() => handleSelect(item.id)}
+                      onMouseEnter={() => setHoveredIdx(idx)}
+                      onMouseLeave={() => setHoveredIdx(null)}
+                      className={`flex items-center gap-1 font-['Montserrat',_sans-serif] uppercase text-[8.5px] sm:text-[9.5px] tracking-[0.22em] transition-colors duration-200 cursor-pointer ${
+                        isActive
+                          ? isWhite 
+                            ? 'text-stone-950 font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]'
+                            : 'text-white font-bold drop-shadow-[0_1px_4px_rgba(255,255,255,0.85)]'
+                          : isWhite
+                            ? 'text-stone-500 hover:text-stone-900 font-medium'
+                            : 'text-stone-400 hover:text-white font-medium'
+                      }`}
+                    >
+                      {isActive && (
+                        <span className={`w-1.5 h-1.5 rounded-full animate-pulse shrink-0 mr-0.5 ${
+                          isWhite ? 'bg-stone-900' : 'bg-white'
+                        }`} />
+                      )}
+                      <span className="inline-block transition-all duration-200">
+                        {isItemHovered ? item.label : item.short}
+                      </span>
+                      <span className={`text-[6.5px] ml-1 ${isWhite ? 'text-stone-400' : 'text-white/20'}`}>·</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+          </Magnetic>
+        </div>
+
+      </div>
+    </header>
+  );
+};
+

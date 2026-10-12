@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-wide: 'Montserrat', sans-serif;
+    --font-roman: 'Montserrat', sans-serif;
+  }
+  
+  html {
+    scroll-behavior: auto; /* Managed by Lenis for smooth momentum */
+    scroll-padding-top: 4rem;
+  }
+
+  body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    background-color: #050507;
+    color: #edeae2;
+    overflow-x: clip;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ========================================================================== */
+/* UNIFIED LUXURY TYPOGRAPHY SYSTEM                                          */
+/* ========================================================================== */
+.font-display,
+.font-heading {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.font-body,
+.font-sans,
+.font-sans-luxury {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.font-wide {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+}
+
+.font-serif,
+.font-cinematic,
+.font-roman,
+.font-luxury-serif {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.font-editorial {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.font-cursive,
+.font-signature {
+  font-family: 'Allura', 'Alex Brush', cursive, Georgia, serif;
+  letter-spacing: 0.04em;
+}
+
+.font-meta,
+.font-mono,
+.font-mono-meta {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.72rem;
+}
+
+/* ========================================================================== */
+/* ULTRA-LUXURY METALLIC PALETTE: CHAMPAGNE GOLD, PLATINUM, BRONZE NOIR       */
+/* Static GPU-friendly gradients to eliminate costly repaint bottlenecks     */
+/* ========================================================================== */
+.gradient-gold,
+.gradient-mythic {
+  background: linear-gradient(135deg, #c5a059 0%, #e2d7c5 35%, #9e7d3b 70%, #7a5e28 100%);
+}
+
+.text-gradient-gold,
+.text-gradient-mythic {
+  background: linear-gradient(135deg, #f0eae1 0%, #d5be93 30%, #eedfcb 60%, #b89858 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 4px rgba(184, 152, 88, 0.25));
+}
+
+.text-gradient-silver-gold {
+  background: linear-gradient(135deg, #f5f3ef 0%, #d1c4aa 30%, #e8e3dc 60%, #a89469 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-platinum {
+  background: linear-gradient(135deg, #f0f0f2 0%, #ffffff 35%, #cfcfd4 70%, #f5f5f7 100%);
+}
+
+.text-gradient-platinum {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 40%, #dcdcdc 80%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-silver {
+  background: linear-gradient(135deg, #e4e4e6 0%, #ffffff 35%, #c8c8cc 70%, #eaeaea 100%);
+}
+
+.gradient-chromatic,
+.gradient-aurora {
+  background: linear-gradient(135deg, #dfba73 0%, #f5ebd7 30%, #ffffff 50%, #c49942 80%, #faeed7 100%);
+}
+
+.text-gradient-chromatic,
+.text-gradient-metallic {
+  background: linear-gradient(135deg, #ffffff 0%, #faeed7 30%, #dfba73 60%, #cca552 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gradient-gold {
+  border-image: linear-gradient(135deg, #dfba73, #ffffff, #c49942) 1;
+}
+
+.badge-metallic {
+  background: linear-gradient(135deg, rgba(223, 186, 115, 0.12), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(223, 186, 115, 0.3);
+  color: #f7eccb;
+}
+
+/* Text on Image Shadow Highlighting Helpers */
+.text-shadow-image {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95), 0 4px 16px rgba(0, 0, 0, 0.9), 0 8px 32px rgba(0, 0, 0, 0.85);
+}
+
+.text-shadow-subtle {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* ========================================================================== */
+/* HARDWARE-ACCELERATED CONTINUOUS MARQUEE ANIMATIONS (60-120FPS)             */
+/* Uses translate3d exclusively for buttery compositor execution              */
+/* ========================================================================== */
+@keyframes marquee-compositor {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-compositor-reverse {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes marquee-track-smooth {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+.animate-marquee-track {
+  animation: marquee-track-smooth 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-compositor 90s linear infinite;
+  will-change: transform;
+}
+
+.animate-awards-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-compositor 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-compositor-reverse 90s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover,
+.animate-awards-marquee:hover,
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #060608;
+}
+::-webkit-scrollbar-thumb {
+  background: #252422;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c5a059;
+}

@@ -1,0 +1,8 @@
+{
+  "name": "NJD",
+  "description": "Curated visual archive of contemporary Indian movement, choreography, weddings, workshops, and studio productions by Nicy Joseph.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
